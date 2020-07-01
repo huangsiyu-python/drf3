@@ -22,7 +22,8 @@ from drf3 import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # 指定图片上传的目录
+    # 指 定图片上传的目录
     url(r"^media/(?P<path>.*)", serve, {"document_root": settings.MEDIA_ROOT}),
     path("api/", include("api.urls")),
+    path("day4/",include("day4.urls"))
 ]

@@ -40,7 +40,8 @@ class BookAPIViewV2(APIView):
     def get(self, request, *args, **kwargs):
         book_id = kwargs.get("id")
         if book_id:
-            book_obj = Book.objects.filter(pk=book_id, is_delete=False)
+            # book_obj = Book.objects.filter(pk=book_id, is_delete=False)
+            book_obj=Book.objects.get(pk=book_id,is_delete=False)
             book_ser = BookModelSerializerV2(book_obj).data
             return Response({
                 "status": status.HTTP_200_OK,
@@ -69,7 +70,7 @@ class BookAPIViewV2(APIView):
                 "message": "请求参数格式有误",
             })
 
-        book_ser = BookModelSerializerV2(data=request_data, many=many)
+        book_ser = BookModelSerializerV2(data=request_data, many=many,context={"request": request})
         book_ser.is_valid(raise_exception=True)
         book_obj = book_ser.save()
 
